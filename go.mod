@@ -4,13 +4,13 @@ go 1.20
 
 require (
 	github.com/gofiber/fiber v1.14.6
+	github.com/gofiber/fiber/v2 v2.43.0
 	github.com/spf13/viper v1.15.0
 )
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
-	github.com/gofiber/fiber/v2 v2.43.0 // indirect
 	github.com/gofiber/utils v0.0.10 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/gorilla/schema v1.1.0 // indirect

@@ -13,4 +13,8 @@ debug:
 sqlc:
 	sqlc generate
 
-.PHONE: debug postgres createdb dropdb sqlc
+
+new-migration:
+	atlas migrate new --dir "file://db/migration/"
+
+.PHONE: debug postgres createdb dropdb sqlc new-migration
