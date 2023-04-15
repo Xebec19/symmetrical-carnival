@@ -17,4 +17,7 @@ sqlc:
 new-migration:
 	atlas migrate new --dir "file://db/migration/"
 
-.PHONE: debug postgres createdb dropdb sqlc new-migration
+inspect:
+	atlas schema inspect -u "postgres://root:root@0.0.0.0:5432/blogdb?sslmode=disable" --format "{{ sql . }}"
+
+.PHONE: debug postgres createdb dropdb sqlc new-migration inspect
