@@ -3,6 +3,8 @@ package api
 import (
 	db "github.com/Xebec19/symmetrical-carnival/db/sqlc"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
 type Server struct {
@@ -13,6 +15,9 @@ type Server struct {
 func NewServer(store *db.Queries) *Server {
 	server := &Server{store: store}
 	router := fiber.New()
+
+	router.Use(cors.New())
+	router.Use(logger.New())
 
 	api := router.Group("/api")
 

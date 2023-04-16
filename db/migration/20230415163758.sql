@@ -41,3 +41,32 @@ INSERT INTO public.posts
 (title, created_at, updated_at, "source", tags)
 VALUES('Introduction to React', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'https://symmetrical-carnival.s3.ap-south-1.amazonaws.com/publicprefix/INTRODUCTION_TO_REACT.md', '{"web development","react","frontend"}');
 
+-- added description for post
+alter table posts 
+add column description text;
+
+update posts 
+set description = 'Web development has come a long way since the early days of static HTML pages. Today, the web is a dynamic and interactive platform that allows for real-time communication, multimedia content, and complex data processing. As technology continues to evolve at a rapid pace, the future of web development is poised to bring even more exciting innovations to the table.'
+where id = '5f1ccc79-945c-4f7d-945a-721997c0a3e0';
+
+update posts 
+set description = 'React is an open-source JavaScript library for building user interfaces or UI components. It was developed and maintained by Facebook and was released in 2013. Since then, React has become one of the most popular frontend libraries, and is widely used by developers to build modern web applications.'
+where id = '5f1ccc79-945c-4f7d-945a-721997c0a3e0';
+
+-- added image url column in post table
+alter table posts add column image_url varchar(255);
+
+-- added image reference which will help me to show credits of image
+alter table posts add column image_reference text;
+
+-- added image for posts
+update posts 
+set image_url = 'https://symmetrical-carnival.s3.ap-south-1.amazonaws.com/publicprefix/kobu-agency-7okkFhxrxNw-unsplash.jpg', 
+image_reference = 'https://unsplash.com/@kobuagency?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText'
+where id = '5f1ccc79-945c-4f7d-945a-721997c0a3e0';
+
+update posts 
+set image_url = 'https://symmetrical-carnival.s3.ap-south-1.amazonaws.com/publicprefix/lautaro-andreani-xkBaqlcqeb4-unsplash.jpg', 
+image_reference = 'https://unsplash.com/@lautaroandreani?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText'
+where id = '9b588811-c8d2-47e4-bc86-30c933520731';
+
