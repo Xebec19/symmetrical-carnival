@@ -5,7 +5,10 @@ import (
 )
 
 type Config struct {
-	DUMMY string `mapstructure:"DUMMY"`
+	DUMMY          string `mapstructure:"DUMMY"`
+	DB_DRIVER      string `mapstructure:"DB_DRIVER"`
+	DB_SOURCE      string `mapstructure:"DB_SOURCE"`
+	SERVER_ADDRESS string `mapstructure:"SERVER_ADDRESS"`
 }
 
 // LoadConfig parses env variables stored in .env file and returns them

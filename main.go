@@ -1,11 +1,13 @@
 package main
 
 import (
+	"database/sql"
 	"log"
 
-	"github.com/Xebec19/symmetrical-carnival/posts"
+	"github.com/Xebec19/symmetrical-carnival/api"
+	db "github.com/Xebec19/symmetrical-carnival/db/sqlc"
 	"github.com/Xebec19/symmetrical-carnival/util"
-	"github.com/gofiber/fiber/v2"
+	_ "github.com/lib/pq"
 )
 
 // Package main implements a simple web server and implements REST APIs to
@@ -18,11 +20,15 @@ func main() {
 		log.Fatal("cannot load config:", err)
 	}
 
-	println(config.DUMMY)
+	conn, err := sql.Open(config.DB_DRIVER, config.DB_SOURCE)
+	if err != nil {
+		log.Fatal("cannot connect to db:", err)
+	}
 
-	app := fiber.New()
-
-	posts.SetRoute(app)
-
-	app.Listen(":3000")
+	store := db.New(conn)
+	server := api.NewServer(store)
+	err = server.Start(config.SERVER_ADDRESS)
+	if err != nil {
+		log.Fatal("cannot start server")
+	}
 }
