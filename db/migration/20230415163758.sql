@@ -20,3 +20,24 @@ create table comments (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     body TEXT NOT NULL
 );
+
+-- alter column name in posts
+alter table posts 
+drop column content;
+
+alter table posts 
+add column source varchar(255);
+
+-- add tags column
+alter table posts add column tags varchar(255)[] ;
+
+-- add first record
+INSERT INTO public.posts
+(title, created_at, updated_at, "source", tags)
+VALUES('Future of web development', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'https://symmetrical-carnival.s3.ap-south-1.amazonaws.com/publicprefix/FUTURE_OF_WEB_DEVELOPMENT.md', '{"web development"}');
+
+-- add second record
+INSERT INTO public.posts
+(title, created_at, updated_at, "source", tags)
+VALUES('Introduction to React', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'https://symmetrical-carnival.s3.ap-south-1.amazonaws.com/publicprefix/INTRODUCTION_TO_REACT.md', '{"web development","react","frontend"}');
+

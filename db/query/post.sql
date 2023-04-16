@@ -1,5 +1,9 @@
 -- name: GetPosts :many
-select ID, TITLE, content, CREATED_AT from POSTS;
+SELECT id, title, created_at, updated_at, "source", tags
+FROM public.posts;
+
 
 -- name: GetPostById :one
-select ID, TITLE, content, CREATED_AT from POSTS WHERE ID = $1;
+SELECT id, title, created_at, updated_at, "source", tags
+FROM public.posts
+WHERE ID = $1;
