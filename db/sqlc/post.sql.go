@@ -7,59 +7,52 @@ package db
 
 import (
 	"context"
-	"database/sql"
 
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 )
 
 const getPostById = `-- name: GetPostById :one
-select ID, TITLE, content, CREATED_AT from POSTS WHERE ID = $1
+SELECT id, title, created_at, updated_at, "source", tags
+FROM public.posts
+WHERE ID = $1
 `
 
-type GetPostByIdRow struct {
-	ID        uuid.UUID    `json:"id"`
-	Title     string       `json:"title"`
-	Content   string       `json:"content"`
-	CreatedAt sql.NullTime `json:"created_at"`
-}
-
-func (q *Queries) GetPostById(ctx context.Context, id uuid.UUID) (GetPostByIdRow, error) {
+func (q *Queries) GetPostById(ctx context.Context, id uuid.UUID) (Post, error) {
 	row := q.db.QueryRowContext(ctx, getPostById, id)
-	var i GetPostByIdRow
+	var i Post
 	err := row.Scan(
 		&i.ID,
 		&i.Title,
-		&i.Content,
 		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.Source,
+		pq.Array(&i.Tags),
 	)
 	return i, err
 }
 
 const getPosts = `-- name: GetPosts :many
-select ID, TITLE, content, CREATED_AT from POSTS
+SELECT id, title, created_at, updated_at, "source", tags
+FROM public.posts
 `
 
-type GetPostsRow struct {
-	ID        uuid.UUID    `json:"id"`
-	Title     string       `json:"title"`
-	Content   string       `json:"content"`
-	CreatedAt sql.NullTime `json:"created_at"`
-}
-
-func (q *Queries) GetPosts(ctx context.Context) ([]GetPostsRow, error) {
+func (q *Queries) GetPosts(ctx context.Context) ([]Post, error) {
 	rows, err := q.db.QueryContext(ctx, getPosts)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []GetPostsRow
+	var items []Post
 	for rows.Next() {
-		var i GetPostsRow
+		var i Post
 		if err := rows.Scan(
 			&i.ID,
 			&i.Title,
-			&i.Content,
 			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.Source,
+			pq.Array(&i.Tags),
 		); err != nil {
 			return nil, err
 		}

@@ -17,7 +17,9 @@ func NewServer(store *db.Queries) *Server {
 	api := router.Group("/api")
 
 	posts := api.Group("/posts")
-	posts.Get("/", server.getAllPost)
+	posts.Get("/", server.getPost)
+	posts.Get("/:id", server.getPostById)
+	posts.Get("/:id/comments", server.getComment)
 
 	server.router = router
 	return server
