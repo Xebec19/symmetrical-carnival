@@ -7,25 +7,41 @@ package db
 
 import (
 	"context"
+	"database/sql"
 
 	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
 const getPostById = `-- name: GetPostById :one
-SELECT id, title, created_at, updated_at, "source", tags
+SELECT id, title, image_url, image_reference, created_at, updated_at, description, "source", tags
 FROM public.posts
 WHERE ID = $1
 `
 
-func (q *Queries) GetPostById(ctx context.Context, id uuid.UUID) (Post, error) {
+type GetPostByIdRow struct {
+	ID             uuid.UUID      `json:"id"`
+	Title          string         `json:"title"`
+	ImageUrl       sql.NullString `json:"image_url"`
+	ImageReference sql.NullString `json:"image_reference"`
+	CreatedAt      sql.NullTime   `json:"created_at"`
+	UpdatedAt      sql.NullTime   `json:"updated_at"`
+	Description    sql.NullString `json:"description"`
+	Source         sql.NullString `json:"source"`
+	Tags           []string       `json:"tags"`
+}
+
+func (q *Queries) GetPostById(ctx context.Context, id uuid.UUID) (GetPostByIdRow, error) {
 	row := q.db.QueryRowContext(ctx, getPostById, id)
-	var i Post
+	var i GetPostByIdRow
 	err := row.Scan(
 		&i.ID,
 		&i.Title,
+		&i.ImageUrl,
+		&i.ImageReference,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.Description,
 		&i.Source,
 		pq.Array(&i.Tags),
 	)
@@ -33,23 +49,38 @@ func (q *Queries) GetPostById(ctx context.Context, id uuid.UUID) (Post, error) {
 }
 
 const getPosts = `-- name: GetPosts :many
-SELECT id, title, created_at, updated_at, "source", tags
-FROM public.posts
+SELECT id, title, image_url, image_reference, created_at, description, updated_at, "source", tags
+FROM public.posts order by created_at desc
 `
 
-func (q *Queries) GetPosts(ctx context.Context) ([]Post, error) {
+type GetPostsRow struct {
+	ID             uuid.UUID      `json:"id"`
+	Title          string         `json:"title"`
+	ImageUrl       sql.NullString `json:"image_url"`
+	ImageReference sql.NullString `json:"image_reference"`
+	CreatedAt      sql.NullTime   `json:"created_at"`
+	Description    sql.NullString `json:"description"`
+	UpdatedAt      sql.NullTime   `json:"updated_at"`
+	Source         sql.NullString `json:"source"`
+	Tags           []string       `json:"tags"`
+}
+
+func (q *Queries) GetPosts(ctx context.Context) ([]GetPostsRow, error) {
 	rows, err := q.db.QueryContext(ctx, getPosts)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Post
+	var items []GetPostsRow
 	for rows.Next() {
-		var i Post
+		var i GetPostsRow
 		if err := rows.Scan(
 			&i.ID,
 			&i.Title,
+			&i.ImageUrl,
+			&i.ImageReference,
 			&i.CreatedAt,
+			&i.Description,
 			&i.UpdatedAt,
 			&i.Source,
 			pq.Array(&i.Tags),

@@ -12,8 +12,8 @@ import (
 
 type Querier interface {
 	GetComments(ctx context.Context, id uuid.UUID) ([]Comment, error)
-	GetPostById(ctx context.Context, id uuid.UUID) (Post, error)
-	GetPosts(ctx context.Context) ([]Post, error)
+	GetPostById(ctx context.Context, id uuid.UUID) (GetPostByIdRow, error)
+	GetPosts(ctx context.Context) ([]GetPostsRow, error)
 }
 
 var _ Querier = (*Queries)(nil)

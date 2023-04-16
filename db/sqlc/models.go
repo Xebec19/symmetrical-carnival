@@ -65,10 +65,13 @@ type Comment struct {
 }
 
 type Post struct {
-	ID        uuid.UUID      `json:"id"`
-	Title     string         `json:"title"`
-	CreatedAt sql.NullTime   `json:"created_at"`
-	UpdatedAt sql.NullTime   `json:"updated_at"`
-	Source    sql.NullString `json:"source"`
-	Tags      []string       `json:"tags"`
+	ID             uuid.UUID      `json:"id"`
+	Title          string         `json:"title"`
+	CreatedAt      sql.NullTime   `json:"created_at"`
+	UpdatedAt      sql.NullTime   `json:"updated_at"`
+	Source         sql.NullString `json:"source"`
+	Tags           []string       `json:"tags"`
+	Description    sql.NullString `json:"description"`
+	ImageUrl       sql.NullString `json:"image_url"`
+	ImageReference sql.NullString `json:"image_reference"`
 }
