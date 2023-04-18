@@ -63,10 +63,10 @@ alter table posts add column image_reference text;
 update posts 
 set image_url = 'https://symmetrical-carnival.s3.ap-south-1.amazonaws.com/publicprefix/kobu-agency-7okkFhxrxNw-unsplash.jpg', 
 image_reference = 'https://unsplash.com/@kobuagency?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText'
-where id = '5f1ccc79-945c-4f7d-945a-721997c0a3e0';
+where id = '9b588811-c8d2-47e4-bc86-30c933520731';
 
 update posts 
 set image_url = 'https://symmetrical-carnival.s3.ap-south-1.amazonaws.com/publicprefix/lautaro-andreani-xkBaqlcqeb4-unsplash.jpg', 
 image_reference = 'https://unsplash.com/@lautaroandreani?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText'
-where id = '9b588811-c8d2-47e4-bc86-30c933520731';
+where id = '5f1ccc79-945c-4f7d-945a-721997c0a3e0';
 
