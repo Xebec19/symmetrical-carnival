@@ -10,6 +10,9 @@ dropdb:
 debug:
 	exec ~/go/bin/air
 
+build:
+	go build -o build -ldflags="-s -w"
+
 sqlc:
 	sqlc generate
 
@@ -20,4 +23,4 @@ new-migration:
 inspect:
 	atlas schema inspect -u "postgres://root:root@0.0.0.0:5432/blogdb?sslmode=disable" --format "{{ sql . }}"
 
-.PHONE: debug postgres createdb dropdb sqlc new-migration inspect
+.PHONE: debug postgres createdb dropdb sqlc new-migration inspect build
