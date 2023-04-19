@@ -1,3 +1,5 @@
+// Package main implements a simple web server and implements REST APIs to
+// be consumed by a frontend client
 package main
 
 import (
@@ -10,8 +12,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// Package main implements a simple web server and implements REST APIs to
-// be consumed by a frontend client
 func main() {
 
 	// loading env variables
