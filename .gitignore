@@ -1,3 +1,5 @@
 app.env
 assets
 build
+
+/db/sqlc
