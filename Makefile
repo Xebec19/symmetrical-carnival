@@ -18,9 +18,12 @@ sqlc:
 
 
 new-migration:
-	atlas migrate new --dir "file://db/migration/"
+	soda generate sql 
 
-inspect:
-	atlas schema inspect -u "postgres://root:root@0.0.0.0:5432/blogdb?sslmode=disable" --format "{{ sql . }}"
+migrate:
+	soda migrate
 
-.PHONE: debug postgres createdb dropdb sqlc new-migration inspect build
+migrate-down:
+	soda migrate down
+
+.PHONY: debug postgres createdb dropdb sqlc new-migration inspect build new-migration migrate migrate-down

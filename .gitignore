@@ -3,3 +3,4 @@ assets
 build
 
 /db/sqlc
+/db/database.yml
