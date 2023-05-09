@@ -1,3 +1,2 @@
-drop table posts;
-
 drop table comments;
+drop table posts;
