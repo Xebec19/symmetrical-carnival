@@ -22,7 +22,8 @@ module.exports = {
       ref: "origin/main",
       repo: "git@github.com:Xebec19/symmetrical-carnival",
       path: "/home/ubuntu/symmetrical-carnival",
-      "post-deploy": "chmod +x start.sh && ./start.sh",
+      "post-deploy":
+        "cd /home/ubuntu/symmetrical-carnival && chmod +x start.sh && ./start.sh",
     },
   },
 };
