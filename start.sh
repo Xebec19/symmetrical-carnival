@@ -8,3 +8,5 @@ go build -o build -ldflags="-s -w"
 make sqlc
 
 cd db/ && soda migrate
+
+exec /build
