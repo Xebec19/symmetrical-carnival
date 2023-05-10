@@ -9,4 +9,4 @@ make sqlc
 
 cd db/ && soda migrate
 
-exec /build
+pm2 restart build --name=blog-api
