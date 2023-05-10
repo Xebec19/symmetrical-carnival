@@ -4,6 +4,7 @@ import (
 	db "github.com/Xebec19/symmetrical-carnival/db/sqlc"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
@@ -18,6 +19,7 @@ func NewServer(store *db.Queries) *Server {
 
 	router.Use(cors.New())
 	router.Use(logger.New())
+	router.Use(limiter.New())
 
 	api := router.Group("/api")
 
