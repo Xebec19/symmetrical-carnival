@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "blog-api",
-      script: "build",
+      script: "start.sh",
       autorestart: true,
       instances: 1,
       autorestart: true,
