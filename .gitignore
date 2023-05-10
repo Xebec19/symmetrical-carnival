@@ -4,3 +4,4 @@ build
 
 /db/sqlc
 /db/database.yml
+/tmp/*
