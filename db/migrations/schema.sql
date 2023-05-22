@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 12.13
--- Dumped by pg_dump version 15.2 (Ubuntu 15.2-1.pgdg20.04+1)
+-- Dumped by pg_dump version 15.3 (Ubuntu 15.3-1.pgdg20.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;

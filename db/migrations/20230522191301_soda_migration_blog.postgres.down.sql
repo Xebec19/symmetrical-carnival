@@ -1,0 +1,1 @@
+delete from public.posts where title = 'Database Migration in Go Projects with Soda: A Concise Guide';
