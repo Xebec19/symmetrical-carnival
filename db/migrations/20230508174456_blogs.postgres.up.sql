@@ -2,7 +2,7 @@
 -- CREATE TYPE platform_enum AS ENUM('google','discord');
 
 -- it contains posts
-CREATE TABLE public.posts (
+CREATE TABLE IF NOT EXISTS public.posts (
     id uuid NOT NULL DEFAULT uuid_generate_v4(),
     title varchar(255) NOT NULL,
     created_at timestamptz NULL DEFAULT NOW(),
@@ -17,7 +17,7 @@ CREATE TABLE public.posts (
 
 
 -- it contains comments by users on one post
-CREATE TABLE public.comments (
+CREATE TABLE IF NOT EXISTS public.comments (
     id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
     post_id uuid REFERENCES public.posts (id) ON DELETE CASCADE,
     author_id VARCHAR(255) NOT NULL,

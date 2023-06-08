@@ -1,9 +1,11 @@
 package api
 
 import (
+	"database/sql"
+	"strconv"
+
 	"github.com/Xebec19/symmetrical-carnival/util"
 	"github.com/gofiber/fiber/v2"
-	"github.com/google/uuid"
 )
 
 // getPost returns all posts
@@ -26,27 +28,49 @@ func (server *Server) getPost(c *fiber.Ctx) error {
 // getPostById expects a param i.e. id in URL and returns that post only
 //
 // Parameters:
-//   - id: UUID in params
+//   - slug: slug of post
 //
 // Returns:
 //   - status: boolean
 //   - data: object containing a post
 //   - message: string
 func (server *Server) getPostById(c *fiber.Ctx) error {
-	id := c.Params("id")
+	slug := c.Params("slug")
 
-	parsedUUID, err := uuid.Parse(id)
-	if err != nil {
-		c.Status(fiber.StatusBadRequest).JSON(util.ErrorResponse(err))
-		return err
-	}
-
-	post, err := server.store.GetPostById(c.Context(), parsedUUID)
+	post, err := server.store.GetOnePost(c.Context(), sql.NullString{String: slug, Valid: true})
 	if err != nil {
 		c.Status(fiber.StatusInternalServerError).JSON(util.ErrorResponse(err))
 		return err
 	}
 
 	c.Status(fiber.StatusAccepted).JSON(util.SuccessResponse(post, "Posts fetched successfully"))
+	return nil
+}
+
+// getPostSlugs expects a param i.e. limit in URL and returns that slug of posts
+//
+// Parameters:
+//   - limit: no of slugs
+//
+// Returns:
+//   - status: boolean
+//   - data: object containing a post
+//   - message: string
+func (server *Server) getPostSlugs(c *fiber.Ctx) error {
+	param := c.Params("limit")
+	limit, err := strconv.Atoi(param)
+	if err != nil {
+		c.Status(fiber.StatusInternalServerError).JSON(util.ErrorResponse(err))
+		return err
+	}
+
+	slugs, err := server.store.GetPostSlugs(c.Context(), int32(limit))
+
+	if err != nil {
+		c.Status(fiber.StatusInternalServerError).JSON(util.ErrorResponse(err))
+		return err
+	}
+
+	c.Status(fiber.StatusAccepted).JSON(util.SuccessResponse(slugs, "Posts fetched successfully"))
 	return nil
 }
