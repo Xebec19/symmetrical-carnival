@@ -29,4 +29,7 @@ migrate-down:
 deploy:
 	pm2 deploy pm2.config.js blog-api
 
-.PHONY: debug postgres createdb dropdb sqlc new-migration inspect build new-migration migrate migrate-down deploy
+scan: 
+	govulncheck ./...
+
+.PHONY: debug postgres createdb dropdb sqlc new-migration inspect build new-migration migrate migrate-down deploy scan
